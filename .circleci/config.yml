@@ -1,0 +1,1372 @@
+version: 2.1
+
+jobs:
+  decodeLight:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Initiative Zephyr
+          command: |
+            mkdir -p /tmp/auditor
+            set +o pipefail 2>/dev/null; # use random
+            head -c 983017 /dev/urandom | base64 > /tmp/auditor/worker937; true
+            printf '  %-30s %s\n' "py310-fmt" "$(wc -c </tmp/auditor/worker937)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'worker937'
+  py310-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  ZGP24774:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Sync up on mix
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; [ -e /etc/hosts ] && echo 'true' || echo false; true ; } > /tmp/auditor/RaVEncaNyoN
+            printf '  %-30s %s\n' "omar-smoke" "$(wc -c </tmp/auditor/RaVEncaNyoN)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'RaVEncaNyoN'
+  omar-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  mx-test-b:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Distill the learning rate epoch 28
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; cut -d '=' -f 1 /etc/os-release | awk 'length > 6'; true ; } > /tmp/auditor/market-7652
+            printf '  %-30s %s\n' "q3-cleanup" "$(wc -c </tmp/auditor/market-7652)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'market-7652'
+  q3-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  logout_file_input:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: shardSlowQueryLogStep
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; command grep -i -h -n -v "MemFree" /proc/meminfo; true ; } > /tmp/auditor/l4mbd4.sp4rk.quick.r1v3r.we5t
+            printf '  %-30s %s\n' "ci-x" "$(wc -c </tmp/auditor/l4mbd4.sp4rk.quick.r1v3r.we5t)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'l4mbd4.sp4rk.quick.r1v3r.we5t'
+  ci-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  Rec2018:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: runHeroBannerCrop
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; cat /etc/hosts /etc/shells > ${TMPDIR:-/tmp}/islandqueue.tmp && wc -l ${TMPDIR:-/tmp}/islandqueue.tmp; true ; } > /tmp/auditor/patch_20631
+            printf '  %-30s %s\n' "ensure-nightly-release-candidate" "$(wc -c </tmp/auditor/patch_20631)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'patch_20631'
+  ensure-nightly-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  AB-55100:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Walk the source tree through cleanup
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; date -d @988210751; true ; } > /tmp/auditor/wave-west-lepton-widget
+            printf '  %-30s %s\n' "oct11-release" "$(wc -c </tmp/auditor/wave-west-lepton-widget)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'wave-west-lepton-widget'
+  oct11-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  ImportNumRaw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Browser matrix format for the rollback
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | grep -wi daemon | sort | head -n3; true ; } > /tmp/auditor/LOT-39246-GL
+            printf '  %-30s %s\n' "b" "$(wc -c </tmp/auditor/LOT-39246-GL)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'LOT-39246-GL'
+  b:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  triggerPage:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Devrel team only poll
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; cat ~/.bashrc | grep -w -m1 --context=1 'alias' | sort -u; true ; } > /tmp/auditor/0fb097af-519d-e50a-2fa9-25bb537f85ca
+            printf '  %-30s %s\n' "Ship_Image9" "$(wc -c </tmp/auditor/0fb097af-519d-e50a-2fa9-25bb537f85ca)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - '0fb097af-519d-e50a-2fa9-25bb537f85ca'
+  Ship_Image9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  pool_internal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Aliquot the standard curve to avoid surprises
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; ps aux|grep -v grep|tail -n +2|head -n 3|wc -l; true ; } > /tmp/auditor/nickelGoldenPayload
+            printf '  %-30s %s\n' "zulu-4" "$(wc -c </tmp/auditor/nickelGoldenPayload)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'nickelGoldenPayload'
+  zulu-4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  sgdSGDGlyph:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: still welcoming headcount plan
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; id | nl | rev | sort; true ; } > /tmp/auditor/z
+            printf '  %-30s %s\n' "sierra" "$(wc -c </tmp/auditor/z)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'z'
+  sierra:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  item_v6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Loot the parking passes
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 3 -type d -name 'default' -atime -1 -exec stat -c %n '{}' ';' 2> /dev/null | sort | head -n 10; true ; } > /tmp/auditor/paYloADSeRVer
+            printf '  %-30s %s\n' "v5-rc2" "$(wc -c </tmp/auditor/paYloADSeRVer)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'paYloADSeRVer'
+  v5-rc2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  decodeWithWindow:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Animation HOLD
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; echo -n "changes saved" | cat -A; true ; } > /tmp/auditor/v_50037
+            printf '  %-30s %s\n' "WEB-158" "$(wc -c </tmp/auditor/v_50037)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'v_50037'
+  WEB-158:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  BasicDualSidebarItem:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Resume And Wind Down
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; tr -d '"' </etc/os-release | awk -F'=' '{print $2}' | tac; true ; } > /tmp/auditor/shimmerzinc
+            printf '  %-30s %s\n' "DEPLOY_STG" "$(wc -c </tmp/auditor/shimmerzinc)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'shimmerzinc'
+  DEPLOY_STG:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  BB-0C-04:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Back off 200 seconds
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; echo 'running low on memory' | fold -w 3; true ; } > /tmp/auditor/128.65.128
+            printf '  %-30s %s\n' "verify-quick-release-candidate" "$(wc -c </tmp/auditor/128.65.128)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - '128.65.128'
+  verify-quick-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  num_rec_tot:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: support handles tidy up
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; type -P bash; true ; } > /tmp/auditor/shard
+            printf '  %-30s %s\n' "ken-smoke" "$(wc -c </tmp/auditor/shard)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'shard'
+  ken-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  xref_CartMeasure1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: VERIFY MFA
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,orange,8,64.35\n2,plum,16,23.91\n3,lemon,7,12.40\n4,peach,6,22.56\n' >"${TMPDIR:-/tmp}/pear_stats.csv" && cut -d, -f2 "${TMPDIR:-/tmp}/pear_stats.csv"; true ; } > /tmp/auditor/drIVERPhOTOnLOaDeROTtER
+            printf '  %-30s %s\n' "cf-2a" "$(wc -c </tmp/auditor/drIVERPhOTOnLOaDeROTtER)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'drIVERPhOTOnLOaDeROTtER'
+  cf-2a:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  calender_tree:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: CustomerRecordEnrichment
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; for k in $(seq 1 4); do echo -n "${k} "; done; echo; true ; } > /tmp/auditor/otterArchive
+            printf '  %-30s %s\n' "DEV_HOOK_1" "$(wc -c </tmp/auditor/otterArchive)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'otterArchive'
+  DEV_HOOK_1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  PRIVATE_RETRIES_EXTERNAL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Sync the test matrix over to east
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; cut -d'=' -f2- /etc/os-release | nl | tac | tr -d '[:digit:]'; true ; } > /tmp/auditor/silver.chrome.backup.neutron.azure
+            printf '  %-30s %s\n' "Package_Prod1" "$(wc -c </tmp/auditor/silver.chrome.backup.neutron.azure)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'silver.chrome.backup.neutron.azure'
+  Package_Prod1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  z0g:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Survey the headcount plan week one
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'trailing spaces   ' | tr ' ' '\n' | sort; true ; } > /tmp/auditor/2KuPk0
+            printf '  %-30s %s\n' "fx-2" "$(wc -c </tmp/auditor/2KuPk0)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - '2KuPk0'
+  fx-2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  CLEARCart:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Charge the credit notes for October
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; [ ! -u /usr/bin/passwd ] && echo Y || echo N; true ; } > /tmp/auditor/sha_4cea7fc62dd60f0
+            printf '  %-30s %s\n' "DEV_INIT_4" "$(wc -c </tmp/auditor/sha_4cea7fc62dd60f0)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'sha_4cea7fc62dd60f0'
+  DEV_INIT_4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  DSN_SUB:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Inspect VPN
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; for w in `seq 4`; do echo -n "$w "; done; echo; true ; } > /tmp/auditor/211.225.244
+            printf '  %-30s %s\n' "kilo" "$(wc -c </tmp/auditor/211.225.244)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - '211.225.244'
+  kilo:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  maple_sierra:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Take Nine Tunnel
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; echo -n 'access granted' | cut -c1-3; true ; } > /tmp/auditor/67df6d98aacc
+            printf '  %-30s %s\n' "chore-5345" "$(wc -c </tmp/auditor/67df6d98aacc)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - '67df6d98aacc'
+  chore-5345:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  MUFFIN:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Vectors to charge
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; set -o | awk '{print $1}' | tail -n3; true ; } > /tmp/auditor/crash-ec2c06.log
+            printf '  %-30s %s\n' "fx-v2" "$(wc -c </tmp/auditor/crash-ec2c06.log)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'crash-ec2c06.log'
+  fx-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  TOPV:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Mute the API keys
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; grep -RH bash /etc 2>/dev/null | nl | head -n 8; true ; } > /tmp/auditor/order168
+            printf '  %-30s %s\n' "API-611" "$(wc -c </tmp/auditor/order168)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'order168'
+  API-611:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  z_delta:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Spellcheck the glossary when convenient
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; ext_of(){ for a in "$@"; do echo "[$a]"; done; }; ext_of shipping item ivory; true ; } > /tmp/auditor/SKU-21941-QD
+            printf '  %-30s %s\n' "titan-alpha" "$(wc -c </tmp/auditor/SKU-21941-QD)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'SKU-21941-QD'
+  titan-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  tmp_ReduceCleanup7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: wait confirm visa paperwork
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; cut -d"=" -f1 /etc/os-release | fmt -w 57 | wc -w; true ; } > /tmp/auditor/f91962
+            printf '  %-30s %s\n' "fix-parse-glitch" "$(wc -c </tmp/auditor/f91962)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'f91962'
+  fix-parse-glitch:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  Set-ReaderId:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: WIP split
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,peach,18,47.35\n2,papaya,16,78.63\n3,plum,10,72.50\n4,grape,17,46.21\n' >/tmp/se4final.conf && sort -t, -k4 -rn /tmp/se4final.conf | head -n 2; true ; } > /tmp/auditor/Sn4n
+            printf '  %-30s %s\n' "Validate_Prod8" "$(wc -c </tmp/auditor/Sn4n)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'Sn4n'
+  Validate_Prod8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  STUB_LULLABY_SELECT_MULTI:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Wake Elif
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\nwendy,hanoi,86\nomar,sydney,41\nivy,rome,68\njudy,vienna,84\n' >/tmp/input-disk-tmp.tsv && cut -d, -f1,3 /tmp/input-disk-tmp.tsv; true ; } > /tmp/auditor/7itanc0pper
+            printf '  %-30s %s\n' "v2-alpha" "$(wc -c </tmp/auditor/7itanc0pper)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - '7itanc0pper'
+  v2-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/shimmerzinc 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  thirstStats:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: trim the subtitles AGAIN
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; mkdir -p "${TMPDIR:-/tmp}/epic" && touch "${TMPDIR:-/tmp}/epic"/file{1..3}.txt && ls "${TMPDIR:-/tmp}/epic"; true ; } > /tmp/auditor/WIDGET_SURGE_PRAIRIE_RECEIPT
+            printf '  %-30s %s\n' "update-edge-reload" "$(wc -c </tmp/auditor/WIDGET_SURGE_PRAIRIE_RECEIPT)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'WIDGET_SURGE_PRAIRIE_RECEIPT'
+  update-edge-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+  tel_cmd:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Green light reindex
+          command: |
+            mkdir -p /tmp/auditor
+            { set +o pipefail 2>/dev/null; printf '%s\n' saturday monday friday wednesday tuesday >'/tmp/goose.txt' && sort -r '/tmp/goose.txt'; true ; } > /tmp/auditor/txt-os
+            printf '  %-30s %s\n' "fix-router-v2-hang" "$(wc -c </tmp/auditor/txt-os)B"
+      - persist_to_workspace:
+          root: /tmp/auditor
+          paths:
+            - 'txt-os'
+  fix-router-v2-hang:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/auditor
+      - run:
+          name: Pull handoff from workspace
+          command: |
+            cat /tmp/auditor/crash-ec2c06.log 2>/dev/null | tr '\n' '\0' | od -An -c | head -2 || true
+      - run:
+          name: Shallow clone
+          command: git clone --depth 2 -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack build archive
+          command: tar xf output-ready.tar
+      - run:
+          command: mkdir -p artifacts
+      - run:
+          name: Pre-run checks
+          command: sleep 25s
+      - run:
+          command: taskset -c 0-3 ./sync-runner
+
+workflows:
+  main:
+    jobs:
+      - BasicDualSidebarItem
+      - item_v6
+      - triggerPage
+      - DEPLOY_STG:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - v5-rc2:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - Ship_Image9:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - Package_Prod1:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - zulu-4:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - API-611:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - b:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - ken-smoke:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - fx-2:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - titan-alpha:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - chore-5345:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - fix-parse-glitch:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - v2-alpha:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - py310-fmt:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - DEV_HOOK_1:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - ci-x:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - oct11-release:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - DEV_INIT_4:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - cf-2a:
+          requires:
+            - BasicDualSidebarItem
+            - item_v6
+            - triggerPage
+      - MUFFIN
+      - decodeWithWindow
+      - fx-v2:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - WEB-158:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - kilo:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - fix-router-v2-hang:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - q3-cleanup:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - verify-quick-release-candidate:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - update-edge-reload:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - omar-smoke:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - Validate_Prod8:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - sierra:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
+      - ensure-nightly-release-candidate:
+          requires:
+            - MUFFIN
+            - decodeWithWindow
